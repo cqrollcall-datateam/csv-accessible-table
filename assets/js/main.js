@@ -95,7 +95,7 @@ function doConvert() {
 				row += "      <th scope=\"row\">"+val+"</th>\n";
 			}
 			else {
-				row += "      <td>"+val+"</td>\n";
+				row += "      <td data-label='"+ firstRow[i] +"'>"+val+"</td>\n";
 			}
 		});
 		row += "    </tr>\n";
@@ -119,7 +119,7 @@ function doConvert() {
 
 
 	tablePreview.html(output); // let's give the user a preview!
-	tablePreview.find("table").addClass('pure-table pure-table-striped'); // adding twitter bootstrap style to make it purdy.
+	tablePreview.find("table").addClass('pure-table pure-table-striped table-responsive'); // adding twitter bootstrap style to make it purdy.
 	$('.output').removeClass('hidden'); // show it!
 }
 
@@ -244,5 +244,6 @@ if (window.File && window.FileReader) {
 		return false;
 	});
 }
+
 
 
