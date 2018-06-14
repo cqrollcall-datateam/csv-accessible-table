@@ -11,6 +11,8 @@
 
 
 function doConvert() {
+
+	console.log("doConvert")
 	var input = $('#csvText').val();
 	var hasRowHeaders = $('#optFirstRowHeaders').prop('checked');
 	var hasColHeaders = $('#optFirstColHeaders').prop('checked');
@@ -27,7 +29,9 @@ function doConvert() {
 
 
 	// use the jquery-csv plugin to turn the csv into an array
-	csvArray = $.csv.toArrays(input);
+	var csvArray = $.csv.toArrays(input);
+
+	console.log(csvArray)
 	
 	// start creating the table
 	var output = "<table>\n";
@@ -108,8 +112,14 @@ function doConvert() {
 
 	// output!
 	$('#htmlText').val(output); // throw the html into a textarea
+
+	// make preview code that has indent options
+	// var outputPreview = output.toString().split("<tr>").join("<tr><td><span>out in</span></td>")
+
+
+
 	tablePreview.html(output); // let's give the user a preview!
-	tablePreview.find("table").addClass('table'); // adding twitter bootstrap style to make it purdy.
+	tablePreview.find("table").addClass('pure-table pure-table-striped'); // adding twitter bootstrap style to make it purdy.
 	$('.output').removeClass('hidden'); // show it!
 }
 
