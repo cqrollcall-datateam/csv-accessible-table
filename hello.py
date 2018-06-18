@@ -12,6 +12,8 @@ def write():
 
 	current = str(datetime.datetime.now())
 
+	new_filename = "table-test.html"
+
 	html = ""
 
 	with open("templates/clean_table.html") as ofile:
@@ -19,10 +21,10 @@ def write():
 	ofile.close()
 
 
-	with open("tables/table-test.html", "w") as ofile:
+	with open(new_filename, "w") as ofile:
 		ofile.write(html);
 	ofile.close()
-	return "done"
+	return new_filename
  
 if __name__ == '__main__':
 	app.run(debug=True)

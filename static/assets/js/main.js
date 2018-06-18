@@ -252,9 +252,13 @@ function writeFile(){
       data: {'tableHTML': $("#htmlText").val()},
       method: 'POST',
       success: function(data) {
-        console.log(data)
+        $("#embed-code").text("<div data-pym-src='"+ data +"'>&nbsp;</div>")
+		$("#embed-code").css("display", "block")
       }
     });
+
+    
+
 }
 
 
