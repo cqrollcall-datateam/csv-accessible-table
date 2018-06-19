@@ -118,6 +118,8 @@ function doConvert() {
 
 	tablePreview.html(output); // let's give the user a preview!
 	tablePreview.find("table").addClass('pure-table pure-table-striped table-responsive'); // adding twitter bootstrap style to make it purdy.
+	tablePreview.find("table").attr("id", 'preview-table');
+	new Tablesort(document.getElementById('preview-table'));
 	$('.output').removeClass('hidden'); // show it!
 	
 }
@@ -243,6 +245,8 @@ if (window.File && window.FileReader) {
 		return false;
 	});
 }
+
+
 
 
 

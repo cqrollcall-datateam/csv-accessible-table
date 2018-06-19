@@ -18,6 +18,7 @@
     <meta name="description" content="A tool to quickly and easily create accessible HTML tables">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="static/assets/css/main.css">
+    <link rel="stylesheet" href="static/tablesort.css">
     <link rel="stylesheet" href="static/assets/css/pure.css">
 </head>
 
@@ -97,9 +98,9 @@
             <!-- Step 2 -->
         </form>
         <div class="output hidden">
-            <h2>Step 3: Copy this HTML and paste it in your web page</h2>
+            <h2>Step 3: Get the embed code</h2>
             <div class="form-group html-output">
-                <label for="htmlText">HTML Table Output</label>
+                <label for="htmlText">HTML Table Output (for advanced users)</label>
                 <textarea id="htmlText" class="form-control" rows="8" onclick="this.focus();this.select()" readonly></textarea>
             </div>
             <div class="table-output">
@@ -116,7 +117,7 @@
     <div class="about">
         <div class="container">
             <h2>What is this?</h2>
-            <p>As with most tools, HTML Table Generator arose from a need. How can clients who manage content themselves create semantic and accessible HTML tables without knowing any HTML? Most people have a much higher familiarity with Excel and can quickly create a
+            <p>As with most tools, HTML Table Generator arose from a need. How can journalists who manage content themselves create semantic and accessible HTML tables without knowing any HTML? Most people have a much higher familiarity with Excel and can quickly create a
                 <abbr tile="Comma Separated Values">CSV</abbr> file, so, why not use them to generate some accessible HTML tables?</p>
             <p>Thanks to the folks who created <a href="https://code.google.com/p/jquery-csv/">jquery-csv</a> for making my job a lot easier!</p>
             <h2>Want to contribute?</h2>
@@ -133,6 +134,12 @@
     <script>
     window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')
     </script>
+    <script src='static/tablesort.min.js'></script>
+
+    <!-- Include sort types you need -->
+    <script src='static/sorts/tablesort.number.min.js'></script>
+    <script src='static/sorts/tablesort.date.min.js'></script>
+
     <script src="static/assets/js/main.js"></script>
     <script src="static/assets/js/plugins.js"></script>
 
