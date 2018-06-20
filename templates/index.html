@@ -99,6 +99,11 @@
         </form>
         <div class="output hidden">
             <h2>Step 3: Get the embed code</h2>
+
+            <div class="embed">
+                <label for="htmlEmbed">Story embed code</label>
+                <textarea id="embed-code"></textarea>
+            </div>
             <div class="form-group html-output">
                 <label for="htmlText">HTML Table Output (for advanced users)</label>
                 <textarea id="htmlText" class="form-control" rows="8" onclick="this.focus();this.select()" readonly></textarea>
@@ -106,10 +111,6 @@
             <div class="table-output">
                 <h2>Preview table</h2>
                 <div id="table-preview"></div>
-            </div>
-            <div class="embed">
-                <button type="button" class="btn btn-primary" onclick="writeFile()">Get embed code</button>
-                <textarea id="embed-code"></textarea>
             </div>
         </div>
     </div>

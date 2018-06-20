@@ -12,6 +12,24 @@
 
 function doConvert() {
 
+
+
+	function writeFile(){
+		$.ajax({
+	      url: '/write/',
+	      data: {'tableHTML': $("#htmlText").val()},
+	      method: 'POST',
+	      success: function(data) {
+	        $("#embed-code").text("<div data-pym-src='"+ data +"'>&nbsp;</div>")
+			$("#embed-code").css("display", "block")
+	      }
+	    });
+
+	    
+
+	}
+
+
 	var input = $('#csvText').val();
 	var hasRowHeaders = $('#optFirstRowHeaders').prop('checked');
 	var hasColHeaders = $('#optFirstColHeaders').prop('checked');
@@ -32,7 +50,8 @@ function doConvert() {
 
 	
 	// start creating the table
-	var output = "<table class='pure-table pure-table-striped table-responsive'>\n";
+	var output = "<link rel='stylesheet' href='../static/tablesort.css'>\
+    <table id='preview-table' class='pure-table pure-table-striped table-responsive'>\n";
 	
 	// if the user wants a caption, add that!
 	if (hasCaption) {
@@ -108,6 +127,13 @@ function doConvert() {
 	
 	output += "</table>";
 
+	output += "<script src='../static/tablesort.min.js'></script>\
+    <script src='../static/sorts/tablesort.number.min.js'></script>\
+    <script src='../static/sorts/tablesort.date.min.js'></script>\
+    <script>\
+    new Tablesort(document.getElementById('preview-table'));\
+    </script>";
+
 	// output!
 	$('#htmlText').val(output); // throw the html into a textarea
 
@@ -121,6 +147,9 @@ function doConvert() {
 	tablePreview.find("table").attr("id", 'preview-table');
 	new Tablesort(document.getElementById('preview-table'));
 	$('.output').removeClass('hidden'); // show it!
+
+
+	writeFile();
 	
 }
 
@@ -248,21 +277,5 @@ if (window.File && window.FileReader) {
 
 
 
-
-
-function writeFile(){
-	$.ajax({
-      url: '/write/',
-      data: {'tableHTML': $("#htmlText").val()},
-      method: 'POST',
-      success: function(data) {
-        $("#embed-code").text("<div data-pym-src='"+ data +"'>&nbsp;</div>")
-		$("#embed-code").css("display", "block")
-      }
-    });
-
-    
-
-}
 
 

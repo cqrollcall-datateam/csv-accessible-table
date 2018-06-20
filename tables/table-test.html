@@ -16,7 +16,7 @@
 </head>
 
 <body>
-  <table class='pure-table pure-table-striped table-responsive'>
+  <link rel='stylesheet' href='../static/tablesort.css'>    <table id='preview-table' class='pure-table pure-table-striped table-responsive'>
   <thead>
     <tr>
       <th scope="col">Date</th>
@@ -51,7 +51,7 @@
       <td data-label='Location'>Arabian Gulf</td>
     </tr>
   </tbody>
-</table>
+</table><script src='../static/tablesort.min.js'></script>    <script src='../static/sorts/tablesort.number.min.js'></script>    <script src='../static/sorts/tablesort.date.min.js'></script>    <script>    new Tablesort(document.getElementById('preview-table'));    </script>
 
 
 </body>
