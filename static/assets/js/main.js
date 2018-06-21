@@ -120,6 +120,12 @@ function doConvert(wrapper) {
 		csvArray.splice(lastElement,1);
 	}
 
+	function readFormatting(val) {
+		val = val.replace(/\*(.*)\*/, "<strong>$1</strong>")
+		val = val.replace(/_(.*)_/, "<em>$1</em>")
+		return val
+	}
+
 	// now let's get to the body!
 	var body = "  <tbody>\n";
 	$.each(csvArray, function(i, val){
@@ -130,15 +136,24 @@ function doConvert(wrapper) {
 		var row = "    <tr>\n";
 		
 		$.each(val,function(i,val){
+			val = readFormatting(val)
 			if (i===0 && hasColHeaders) {
 				row += "      <th scope=\"row\">"+val+"</th>\n";
 			}
 			else {
+
+				var dataType = "str"
+
+				if (isNaN(val) == false) {
+					dataType = "num"
+				}
+
+
 				try {
-					row += "      <td data-label='"+ firstRow[i] +"'>"+val+"</td>\n";
+					row += "      <td class='type-" + dataType + "' data-label='"+ firstRow[i] +"'>"+val+"</td>\n";
 				}
 				catch(error) {
-					row += "      <td data-label=''>"+val+"</td>\n";
+					row += "      <td class='type-" + dataType + "' data-label=''>"+val+"</td>\n";
 				}
 			}
 		});
