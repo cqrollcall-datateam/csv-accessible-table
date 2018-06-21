@@ -1983,7 +1983,7 @@ fieldset[disabled] .form-control {
 }
 
 textarea.form-control {
-    height: auto
+    height: 55px;
 }
 
 .form-group {
@@ -3809,7 +3809,7 @@ h2 {
 }
 
 
-.embed {
+.embed, .standalone {
     margin-top: 13px;
     margin-bottom: 13px;
 }
@@ -3879,3 +3879,4 @@ h2 {
 .type-num {
     text-align: right;
 }
+

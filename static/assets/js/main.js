@@ -123,6 +123,7 @@ function doConvert(wrapper) {
 	function readFormatting(val) {
 		val = val.replace(/\*(.*)\*/, "<strong>$1</strong>")
 		val = val.replace(/_(.*)_/, "<em>$1</em>")
+		val = val.replace(/^   /, "&nbsp;&nbsp;&nbsp;&nbsp;")
 		return val
 	}
 
