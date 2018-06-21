@@ -3880,3 +3880,14 @@ h2 {
     text-align: right;
 }
 
+.arrow-img {
+    cursor: pointer;
+}
+
+.arrow-img, .arrow-img img {
+    width:20px;
+}
+
+span.arrow-right {
+    margin-left: 6px;
+}

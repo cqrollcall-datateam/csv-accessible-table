@@ -16,8 +16,6 @@ function doConvert(wrapper) {
 
 
 	function writeFile(wrapper){
-		console.log("wrapper")
-		console.log(wrapper)
 		$.ajax({
 	      url: '/write/',
 	      data: {'tableHTML': $("#htmlText").val(), "wrapper": wrapper},
@@ -54,8 +52,6 @@ function doConvert(wrapper) {
 	var tablePreview = $("#table-preview");
 
 
-	console.log("sortable")
-	console.log(sortable)
 
 	// trim some of that whitespace!!
 	// borrowed from http://stackoverflow.com/questions/3721999/trim-leading-trailing-whitespace-from-textarea-using-jquery
@@ -80,7 +76,6 @@ function doConvert(wrapper) {
 	// let's get the header if needed.
 	if (hasRowHeaders) {
 		var head = "";
-		console.log(csvArray)
 		var firstRow = csvArray[0];
 
 		head += "  <thead>\n    <tr>\n";
@@ -131,10 +126,9 @@ function doConvert(wrapper) {
 	var body = "  <tbody>\n";
 	$.each(csvArray, function(i, val){
 
-		console.log(val)
 		
 		// initialize the row output
-		var row = "    <tr>\n";
+		var row = "    <tr row-number='" + i + "'>\n";
 		
 		$.each(val,function(i,val){
 			val = readFormatting(val)
@@ -181,15 +175,26 @@ function doConvert(wrapper) {
 
 
 
+// make preview code that has indent options
+
+	var arrowImgs = "<span><img class='arrow-img' src='../static/assets/left-arrow-01.png'></span><span class='arrow-right'><img class='arrow-img' src='../static/assets/right-arrow-01.png'></span>"
+
+
+	var outputPreview = output.toString().replace(/(<tr.*>)/g , "$1<td>" + arrowImgs + "</td>")
+
+
+	
+
+
+
+
+
 	// output!
 	$('#htmlText').val(output); // throw the html into a textarea
 
-	// make preview code that has indent options
-	// var outputPreview = output.toString().split("<tr>").join("<tr><td><span>out in</span></td>")
+	
 
-
-
-	tablePreview.html(output); // let's give the user a preview!
+	tablePreview.html(outputPreview); // let's give the user a preview!
 	tablePreview.find("table").addClass('pure-table pure-table-striped table-responsive'); // adding twitter bootstrap style to make it purdy.
 	tablePreview.find("table").attr("id", 'preview-table');
 	new Tablesort(document.getElementById('preview-table'));
