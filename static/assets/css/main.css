@@ -3891,3 +3891,7 @@ h2 {
 span.arrow-right {
     margin-left: 6px;
 }
+
+thead tr td span.arrow-span {
+    display: none;
+}

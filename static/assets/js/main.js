@@ -177,11 +177,10 @@ function doConvert(wrapper) {
 
 // make preview code that has indent options
 
-	var arrowImgs = "<span><img class='arrow-img' src='../static/assets/left-arrow-01.png'></span><span class='arrow-right'><img class='arrow-img' src='../static/assets/right-arrow-01.png'></span>"
+	var arrowImgs = "<span class='arrow-left arrow-span'><img class='arrow-img' src='../static/assets/left-arrow-01.png'></span><span class='arrow-right arrow-span'><img class='arrow-img' src='../static/assets/right-arrow-01.png'></span>"
 
 
 	var outputPreview = output.toString().replace(/(<tr.*>)/g , "$1<td>" + arrowImgs + "</td>")
-
 
 	
 
@@ -195,6 +194,66 @@ function doConvert(wrapper) {
 	
 
 	tablePreview.html(outputPreview); // let's give the user a preview!
+
+
+
+	// make preview indenting interactive
+
+	$("span.arrow-right").on("click", function(){
+		// make the preview change
+		var thisRow = $(this).closest("tr");
+		var thisRowHtml = $(this).closest("tr").html();
+		var thisRowNumber = $(thisRow).attr("row-number");
+		var existingText = $($(thisRow).children("td")[1]).html();
+		$($(thisRow).children("td")[1]).html("&nbsp;&nbsp;&nbsp;" + existingText);
+
+		console.log(thisRowHtml)
+
+		// make the htmlbox change
+
+		var reSearch = "(<tr row-number='"+ thisRowNumber +"'.*\n.*'>)"
+		var newRe = new RegExp(reSearch, "g")
+
+		output = output.replace(newRe, "$1&nbsp;&nbsp;&nbsp;");
+		$('#htmlText').val(output);
+
+		writeFile(wrapper);
+
+
+	})
+
+	$("span.arrow-left").on("click", function(){
+		// make the preview change
+		var thisRow = $(this).closest("tr");
+		var thisRowHtml = $(this).closest("tr").html();
+		var thisRowNumber = $(thisRow).attr("row-number");
+		var existingText = $($(thisRow).children("td")[1]).html();
+		$($(thisRow).children("td")[1]).html(existingText.replace("&nbsp;&nbsp;&nbsp;", ""));
+
+		console.log(thisRowHtml)
+
+		// make the htmlbox change
+
+		var reSearch = "(<tr row-number='"+ thisRowNumber +"'.*\n.*'>)&nbsp;&nbsp;&nbsp;"
+		var newRe = new RegExp(reSearch, "g")
+
+		output = output.replace(newRe, "$1");
+		$('#htmlText').val(output);
+
+		writeFile(wrapper);
+
+
+	})
+
+
+
+
+
+
+
+
+	// end preview interactivity
+
 	tablePreview.find("table").addClass('pure-table pure-table-striped table-responsive'); // adding twitter bootstrap style to make it purdy.
 	tablePreview.find("table").attr("id", 'preview-table');
 	new Tablesort(document.getElementById('preview-table'));
