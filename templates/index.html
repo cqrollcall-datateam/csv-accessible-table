@@ -74,10 +74,16 @@
           </label>
         </div> -->
                 <div class="checkbox">
+                    <label for="optSortable">
+                        <input type="checkbox" id="optSortable" value="" checked> Should the table be sortable? (only if first row contains headings)
+                    </label>
+                </div>
+                <div class="checkbox">
                     <label for="optLastRowFooter">
                         <input type="checkbox" id="optLastRowFooter" value=""> Is the last row a footer?
                     </label>
                 </div>
+                
                 <div class="checkbox">
                     <label for="optCaption">
                         <input type="checkbox" id="optCaption" value=""> Does your table need a caption?
@@ -93,7 +99,8 @@
                     <label for="textCaption">Caption</label>
                     <input type="text" id="textCaption" class="form-control">
                 </div>
-                <button type="button" class="btn btn-primary" onclick="doConvert()">Create HTML table!</button>
+                <button type="button" class="btn btn-primary" onclick="doConvert(false)">Create table for embed</button>
+                <button type="button" class="btn btn-primary" onclick="doConvert(true)">Create table for standalone page</button>
             </div>
             <!-- Step 2 -->
         </form>
@@ -103,6 +110,10 @@
             <div class="embed">
                 <label for="htmlEmbed">Story embed code</label>
                 <textarea id="embed-code"></textarea>
+            </div>
+            <div class="standalone">
+                <label for="standalone-link">Standalone URL</label>
+                <textarea id="standalone-url"></textarea>
             </div>
             <div class="form-group html-output">
                 <label for="htmlText">HTML Table Output (for advanced users)</label>

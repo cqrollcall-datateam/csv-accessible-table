@@ -9,6 +9,7 @@ def index():
 @app.route('/write/', methods=['POST'])
 def write():
 	import datetime
+	wrapper_str = str(request.form["wrapper"])
 
 	current = str(datetime.datetime.now())
 
@@ -17,9 +18,14 @@ def write():
 
 	html = ""
 
-	with open("templates/clean_table.html") as ofile:
-		html = ofile.read().replace("{{TABLE CONTENT}}", request.form["tableHTML"])
-	ofile.close()
+	if wrapper_str == "true":
+		with open("templates/cq-wrapper.html") as ofile:
+			html = ofile.read().replace("{{TABLE CONTENT}}", request.form["tableHTML"])
+		ofile.close()
+	else:
+		with open("templates/clean_table.html") as ofile:
+			html = ofile.read().replace("{{TABLE CONTENT}}", request.form["tableHTML"])
+		ofile.close()
 
 
 	with open("tables/" + new_filename, "w") as ofile:

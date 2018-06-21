@@ -3809,7 +3809,7 @@ h2 {
     margin-bottom: 13px;
 }
 
-#embed-code {
+#embed-code, #standalone-url {
     display: none;
     width: 100%;
     max-width: 500px;

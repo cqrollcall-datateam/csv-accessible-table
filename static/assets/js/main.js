@@ -10,18 +10,32 @@
   })();
 
 
-function doConvert() {
+function doConvert(wrapper) {
 
 
 
-	function writeFile(){
+
+	function writeFile(wrapper){
+		console.log("wrapper")
+		console.log(wrapper)
 		$.ajax({
 	      url: '/write/',
-	      data: {'tableHTML': $("#htmlText").val()},
+	      data: {'tableHTML': $("#htmlText").val(), "wrapper": wrapper},
 	      method: 'POST',
 	      success: function(data) {
-	        $("#embed-code").text("<div data-pym-src='"+ data +"'>&nbsp;</div>")
-			$("#embed-code").css("display", "block")
+	      	if (wrapper == true) {
+	      		$("#standalone-url").text("URLPREFIX/"+ data)
+				$("#standalone-url").css("display", "block")
+				$(".embed").css("display", "none")
+				$(".standalone").css("display", "block")
+	      	}
+	      	else {
+	      		$("#embed-code").text("<div data-pym-src='"+ data +"'>&nbsp;</div>")
+				$("#embed-code").css("display", "block")
+				$(".embed").css("display", "block")
+				$(".standalone").css("display", "none")
+	      	}
+	        
 	      }
 	    });
 
@@ -32,11 +46,16 @@ function doConvert() {
 
 	var input = $('#csvText').val();
 	var hasRowHeaders = $('#optFirstRowHeaders').prop('checked');
+	var sortable = $('#optSortable').prop('checked');
 	var hasColHeaders = $('#optFirstColHeaders').prop('checked');
 	var hasFooter = $('#optLastRowFooter').prop('checked');
 	var hasCaption = $('#optCaption').prop('checked');
 	var captionText = $('#textCaption').val();
 	var tablePreview = $("#table-preview");
+
+
+	console.log("sortable")
+	console.log(sortable)
 
 	// trim some of that whitespace!!
 	// borrowed from http://stackoverflow.com/questions/3721999/trim-leading-trailing-whitespace-from-textarea-using-jquery
@@ -61,6 +80,7 @@ function doConvert() {
 	// let's get the header if needed.
 	if (hasRowHeaders) {
 		var head = "";
+		console.log(csvArray)
 		var firstRow = csvArray[0];
 
 		head += "  <thead>\n    <tr>\n";
@@ -103,6 +123,8 @@ function doConvert() {
 	// now let's get to the body!
 	var body = "  <tbody>\n";
 	$.each(csvArray, function(i, val){
+
+		console.log(val)
 		
 		// initialize the row output
 		var row = "    <tr>\n";
@@ -112,7 +134,12 @@ function doConvert() {
 				row += "      <th scope=\"row\">"+val+"</th>\n";
 			}
 			else {
-				row += "      <td data-label='"+ firstRow[i] +"'>"+val+"</td>\n";
+				try {
+					row += "      <td data-label='"+ firstRow[i] +"'>"+val+"</td>\n";
+				}
+				catch(error) {
+					row += "      <td data-label=''>"+val+"</td>\n";
+				}
 			}
 		});
 		row += "    </tr>\n";
@@ -127,12 +154,16 @@ function doConvert() {
 	
 	output += "</table>";
 
-	output += "<script src='../static/tablesort.min.js'></script>\
-    <script src='../static/sorts/tablesort.number.min.js'></script>\
-    <script src='../static/sorts/tablesort.date.min.js'></script>\
-    <script>\
-    new Tablesort(document.getElementById('preview-table'));\
-    </script>";
+	if (sortable == true) {
+			output += "<script src='../static/tablesort.min.js'></script>\
+		    <script src='../static/sorts/tablesort.number.min.js'></script>\
+		    <script src='../static/sorts/tablesort.date.min.js'></script>\
+		    <script>\
+		    new Tablesort(document.getElementById('preview-table'));\
+		    </script>";
+	}
+
+
 
 	// output!
 	$('#htmlText').val(output); // throw the html into a textarea
@@ -149,7 +180,7 @@ function doConvert() {
 	$('.output').removeClass('hidden'); // show it!
 
 
-	writeFile();
+	writeFile(wrapper);
 	
 }
 
@@ -274,6 +305,21 @@ if (window.File && window.FileReader) {
 		return false;
 	});
 }
+
+
+$("#optFirstRowHeaders").change(function() {
+	if (this.checked != true) {
+		$('#optSortable').prop('checked', false);
+		$("#optSortable").attr("disabled", true);
+	}
+	else {
+		$("#optSortable").attr("disabled", false);
+	}
+})
+
+
+
+
 
 
 
