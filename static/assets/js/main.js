@@ -48,6 +48,7 @@ function doConvert(wrapper) {
 	var hasColHeaders = $('#optFirstColHeaders').prop('checked');
 	var hasFooter = $('#optLastRowFooter').prop('checked');
 	var hasCaption = $('#optCaption').prop('checked');
+	var needIndent = $('#optIndent').prop('checked');
 	var captionText = $('#textCaption').val();
 	var tablePreview = $("#table-preview");
 
@@ -139,7 +140,7 @@ function doConvert(wrapper) {
 
 				var dataType = "str"
 
-				if (isNaN(parseInt(val)) == false) {
+				if (isNaN(parseInt(val)) == false && (Date.parse(val))) {
 					dataType = "num"
 				}
 
@@ -179,13 +180,11 @@ function doConvert(wrapper) {
 
 	var arrowImgs = "<span class='arrow-left arrow-span'><img class='arrow-img' src='../static/assets/left-arrow-01.png'></span><span class='arrow-right arrow-span'><img class='arrow-img' src='../static/assets/right-arrow-01.png'></span>"
 
+	outputPreview = output
 
-	var outputPreview = output.toString().replace(/(<tr.*>)/g , "$1<td>" + arrowImgs + "</td>")
-
-	
-
-
-
+	if (needIndent == true) {
+		var outputPreview = output.toString().replace(/(<tr.*>)/g , "$1<td>" + arrowImgs + "</td>")
+	}
 
 
 	// output!
