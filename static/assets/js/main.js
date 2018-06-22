@@ -207,7 +207,6 @@ function doConvert(wrapper) {
 		var existingText = $($(thisRow).children("td")[1]).html();
 		$($(thisRow).children("td")[1]).html("&nbsp;&nbsp;&nbsp;" + existingText);
 
-		console.log(thisRowHtml)
 
 		// make the htmlbox change
 
@@ -230,7 +229,6 @@ function doConvert(wrapper) {
 		var existingText = $($(thisRow).children("td")[1]).html();
 		$($(thisRow).children("td")[1]).html(existingText.replace("&nbsp;&nbsp;&nbsp;", ""));
 
-		console.log(thisRowHtml)
 
 		// make the htmlbox change
 
