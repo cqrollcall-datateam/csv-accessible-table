@@ -55,9 +55,9 @@ function doConvert(wrapper) {
 
 	// trim some of that whitespace!!
 	// borrowed from http://stackoverflow.com/questions/3721999/trim-leading-trailing-whitespace-from-textarea-using-jquery
-	input = $.trim(input).replace(/\s*[\r\n]+\s*/g, '\n')
-                               .replace(/(<[^\/][^>]*>)\s*/g, '$1')
-                               .replace(/\s*(<\/[^>]+>)/g, '$1');
+	// input = $.trim(input).replace(/\s*[\r\n]+\s*/g, '\n')
+                               // .replace(/(<[^\/][^>]*>)\s*/g, '$1')
+                               // .replace(/\s*(<\/[^>]+>)/g, '$1');
 
 
 	// use the jquery-csv plugin to turn the csv into an array
@@ -139,7 +139,7 @@ function doConvert(wrapper) {
 
 				var dataType = "str"
 
-				if (isNaN(val) == false) {
+				if (isNaN(parseInt(val)) == false) {
 					dataType = "num"
 				}
 
