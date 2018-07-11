@@ -48,8 +48,10 @@ function doConvert(wrapper) {
 	var hasColHeaders = $('#optFirstColHeaders').prop('checked');
 	var hasFooter = $('#optLastRowFooter').prop('checked');
 	var hasCaption = $('#optCaption').prop('checked');
+	var hasChatter = $('#optChatter').prop('checked');
 	var needIndent = $('#optIndent').prop('checked');
 	var captionText = $('#textCaption').val();
+	var chatterText = $('#textChatter').val();
 	var tablePreview = $("#table-preview");
 
 
@@ -71,7 +73,12 @@ function doConvert(wrapper) {
 	
 	// if the user wants a caption, add that!
 	if (hasCaption) {
-		output += "<caption>" + captionText + "</caption>\n";
+		output += "<caption class='hed-capt'>" + captionText + "</caption>\n";
+	}
+
+	// if the user wants a chatter, add that!
+	if (hasChatter) {
+		output += "<caption class='chatter-capt'>" + chatterText + "</caption>\n";
 	}
 
 	// let's get the header if needed.
@@ -119,7 +126,7 @@ function doConvert(wrapper) {
 	function readFormatting(val) {
 		val = val.replace(/\*(.*)\*/, "<strong>$1</strong>")
 		val = val.replace(/_(.*)_/, "<em>$1</em>")
-		val = val.replace(/^   /, "&nbsp;&nbsp;&nbsp;&nbsp;")
+		val = val.replace(/^   /, "&nbsp;&nbsp;&nbsp;")
 		return val
 	}
 
@@ -140,7 +147,8 @@ function doConvert(wrapper) {
 
 				var dataType = "str"
 
-				if (isNaN(parseInt(val)) == false && (Date.parse(val))) {
+
+				if (isNaN(parseInt(val[0])) == false || (Date.parse(val))) {
 					dataType = "num"
 				}
 
@@ -268,6 +276,14 @@ $('#optCaption').change(function() {
 	$('.caption').toggleClass('hidden');
 });
 
+
+// only see the chatter text field when it's necessary.
+$('#optChatter').change(function() {
+	console.log("change chatter")
+	$('.chatter').toggleClass('hidden');
+});
+
+
 // display the success message
 function showSuccess() {
 	$('.alerts .alert-success').removeClass('hidden');
@@ -286,6 +302,12 @@ function hideErrors() {
 $('.button-caption-help').click(function(e){
 	e.preventDefault();
 	$('.captionDescription').toggleClass('hidden');
+});
+
+
+$('.button-chatter-help').click(function(e){
+	e.preventDefault();
+	$('.chatterDescription').toggleClass('hidden');
 });
 
 $('.preview-csv-contents').click(function(e){

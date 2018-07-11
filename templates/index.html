@@ -87,14 +87,13 @@
                 
                 <div class="checkbox">
                     <label for="optCaption">
-                        <input type="checkbox" id="optCaption" value=""> Does your table need a caption?
+                        <input type="checkbox" id="optCaption" value=""> Does your table need a headline?
                     </label>
-                    (
-                    <button class="text-button button-caption-help">What is a caption? Do I need one?</button>)
-                    <div class="captionDescription alert alert-info hidden">
-                        <strong>What is a caption and do I need one?</strong>
-                        <p>Data tables very often have brief descriptive text before or after the table that indicates the content of that table. While it is not necessary for each table to have a caption, a caption is generally very helpful.</p>
-                    </div>
+                </div>
+                <div class="checkbox">
+                    <label for="optChatter">
+                        <input type="checkbox" id="optChatter" value=""> Does your table need chatter?
+                    </label>
                 </div>
                 <div class="checkbox">
                     <label for="optIndent">
@@ -102,8 +101,12 @@
                     </label>
                 </div>
                 <div class="form-group caption hidden">
-                    <label for="textCaption">Caption</label>
+                    <label for="textCaption">Headline</label>
                     <input type="text" id="textCaption" class="form-control">
+                </div>
+                <div class="form-group chatter hidden">
+                    <label for="textChatter">Chatter</label>
+                    <input type="text" id="textChatter" class="form-control">
                 </div>
                 <button type="button" class="btn btn-primary" onclick="doConvert(false)">Create table for embed</button>
                 <button type="button" class="btn btn-primary" onclick="doConvert(true)">Create table for standalone CQ page</button>
@@ -111,7 +114,7 @@
             <!-- Step 2 -->
         </form>
         <div class="output hidden">
-            <h2>Step 3: Get the embed code</h2>
+            <h2>Step 3: Get the code</h2>
 
             <div class="embed">
                 <label for="htmlEmbed">Story embed code</label>
@@ -126,7 +129,7 @@
                 <textarea id="htmlText" class="form-control" rows="8" onclick="this.focus();this.select()" readonly></textarea>
             </div>
             <div class="table-output">
-                <h2>Preview table</h2>
+                <h2>Step 4: Preview table and indent (optional)</h2>
                 <div id="table-preview"></div>
             </div>
         </div>

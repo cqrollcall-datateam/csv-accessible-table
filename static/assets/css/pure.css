@@ -827,10 +827,18 @@ legend {
 }
 
 .pure-table caption {
-    color: #000;
-    font: italic 85%/1 arial,sans-serif;
-    padding: 1em 0;
-    text-align: center
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.pure-table .hed-capt {
+    font-family: GothamNarrow-Bold;
+    font-size: 22px;
+}
+
+.pure-table .chatter-capt {
+    font-family: GothamNarrow-Book;
+    font-size: 16px;
 }
 
 .pure-table td,.pure-table th {
