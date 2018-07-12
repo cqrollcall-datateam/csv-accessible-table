@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+ 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>CQ Roll Call HTML Table Generator</title>
+    <meta name="description" content="A tool to quickly and easily create accessible HTML tables">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../static/assets/css/main.css">
+    <link rel="stylesheet" href="../static/tablesort.css">
+    <link rel="stylesheet" href="../static/assets/css/pure.css">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+    <div class="jumbotron">
+        <div class="container">
+            <h1>CQ Roll Call HTML Table Generator</h1>
+            <p>Have an spreadsheet that you need to quickly convert to some clean, semantic and accessible HTML tables? Then you've come to the right place!</p>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Existing tables</h2>
+        {% for tbl in tables %}
+            <h3><a href='../{{ tbl.id }}'>{{ tbl.hed }}</a></h3>
+            <h5>{{ tbl.chatter }}</h5>
+        {% endfor %}
+    </div>
+    <!-- /container -->
+    <div class="about">
+        <div class="container">
+            <h2>What is this?</h2>
+            <p>As with most tools, HTML Table Generator arose from a need. How can journalists who manage content themselves create semantic and accessible HTML tables without knowing any HTML? Most people have a much higher familiarity with Excel and can quickly create a
+                <abbr tile="Comma Separated Values">CSV</abbr> file, so, why not use them to generate some accessible HTML tables?</p>
+            <p>Thanks to the folks who created <a href="https://code.google.com/p/jquery-csv/">jquery-csv</a> for making my job a lot easier!</p>
+            <h2>Want to contribute?</h2>
+            <p>Have any suggestions on how this tool could be improved? <a href="https://github.com/AdamWills/csv-accessible-table/">Contribute on GitHub</a>.</p>
+        </div>
+    </div>
+    <footer class="content-info">
+        <div class="container">
+            <p>Created by <a href="http://adamwills.com">Adam Wills</a></p>
+            <p>Customized by <a href="http://www.github.com/shmcminn">Sean McMinn</a></p>
+        </div>
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>
+    window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')
+    </script>
+    <script src='../static/tablesort.min.js'></script>
+
+    <!-- Include sort types you need -->
+    <script src='../static/sorts/tablesort.number.min.js'></script>
+    <script src='../static/sorts/tablesort.date.min.js'></script>
+
+    <script src="../static/assets/js/plugins.js"></script>
+
+</body>
+
+</html>

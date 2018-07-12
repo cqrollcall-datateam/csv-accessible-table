@@ -7,26 +7,26 @@
 <!--<![endif]-->
 
 <head>
-    <!--
 
-        Looking for an experienced webdev to join your team? Give me a shout - adam@adamwills.com
+    {% if existing is defined %}
+        {% set staticRoot = "../static" %}
+    {% else %}
+        {% set staticRoot = "static" %}
+    {% endif %}
 
--->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>CQ Roll Call HTML Table Generator</title>
     <meta name="description" content="A tool to quickly and easily create accessible HTML tables">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="static/assets/css/main.css">
-    <link rel="stylesheet" href="static/tablesort.css">
-    <link rel="stylesheet" href="static/assets/css/pure.css">
+    <link rel="stylesheet" href="{{staticRoot}}/assets/css/main.css">
+    <link rel="stylesheet" href="{{staticRoot}}/tablesort.css">
+    <link rel="stylesheet" href="{{staticRoot}}/assets/css/pure.css">
 </head>
-
-<body>
+    <body>
     <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-    <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="container">
             <h1>CQ Roll Call HTML Table Generator</h1>
@@ -68,12 +68,6 @@
                         <input type="checkbox" id="optFirstRowHeaders" value="" checked> Does the first row contain headings?
                     </label>
                 </div>
-                <!--       <div class="checkbox">
-          <label for="optFirstColHeaders">
-            <input type="checkbox" id="optFirstColHeaders" value="">
-            Does the first column contain headings?
-          </label>
-        </div> -->
                 <div class="checkbox">
                     <label for="optSortable">
                         <input type="checkbox" id="optSortable" value="" checked> Should the table be sortable? (only if first row contains headings)
@@ -84,27 +78,26 @@
                         <input type="checkbox" id="optLastRowFooter" value=""> Is the last row a footer?
                     </label>
                 </div>
-                
-                <div class="checkbox">
-                    <label for="optCaption">
-                        <input type="checkbox" id="optCaption" value=""> Does your table need a headline?
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label for="optChatter">
-                        <input type="checkbox" id="optChatter" value=""> Does your table need chatter?
-                    </label>
-                </div>
                 <div class="checkbox">
                     <label for="optIndent">
                         <input type="checkbox" id="optIndent" value=""> Do you need to indent your table?
                     </label>
                 </div>
-                <div class="form-group caption hidden">
+                <div class="checkbox">
+                    <label for="optCaption">
+                        <input type="checkbox" id="optCaption" value="" checked> Does your table need a headline?
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label for="optChatter">
+                        <input type="checkbox" id="optChatter" value="" checked> Does your table need chatter?
+                    </label>
+                </div>
+                <div class="form-group caption">
                     <label for="textCaption">Headline</label>
                     <input type="text" id="textCaption" class="form-control">
                 </div>
-                <div class="form-group chatter hidden">
+                <div class="form-group chatter">
                     <label for="textChatter">Chatter</label>
                     <input type="text" id="textChatter" class="form-control">
                 </div>
@@ -151,18 +144,26 @@
             <p>Customized by <a href="http://www.github.com/shmcminn">Sean McMinn</a></p>
         </div>
     </footer>
+
+    <div class='existing-keys' style="display:none">
+        {% for item in existing %}
+             <p>{{item}}</p>
+             <p>{{existing[item]}}</p>
+        {% endfor %}
+    </div>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script>
     window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')
     </script>
-    <script src='static/tablesort.min.js'></script>
+    <script src='{{staticRoot}}/tablesort.min.js'></script>
 
     <!-- Include sort types you need -->
-    <script src='static/sorts/tablesort.number.min.js'></script>
-    <script src='static/sorts/tablesort.date.min.js'></script>
+    <script src='{{staticRoot}}/sorts/tablesort.number.min.js'></script>
+    <script src='{{staticRoot}}/sorts/tablesort.date.min.js'></script>
 
-    <script src="static/assets/js/main.js"></script>
-    <script src="static/assets/js/plugins.js"></script>
+    <script src="{{staticRoot}}/assets/js/main.js"></script>
+    <script src="{{staticRoot}}/assets/js/plugins.js"></script>
 
 </body>
 

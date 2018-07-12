@@ -1,3 +1,24 @@
+// set page id
+
+var session_id = (new Date().getTime() / 1000).toString().replace(".", "")
+console.log(session_id)
+
+var existingData = {}
+
+var existingPs = $(".existing-keys p")
+var currentKey = ""
+$(existingPs).each(function(ind, el) {
+	if (ind % 2 == 0) {
+		currentKey = $(el).text()
+		console.log(currentKey)
+	}
+	else {
+		existingData[currentKey] = $(el).text()
+	}
+})
+
+console.log(existingData)
+
 // Google Analytics tracking
  var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-9487590-12']);
@@ -15,10 +36,20 @@ function doConvert(wrapper) {
 
 
 
-	function writeFile(wrapper){
+	function writeFile(wrapper, id, hed, chatter, input, hasRowHeaders, sortable, hasFooter, needIndent){
 		$.ajax({
 	      url: '/write/',
-	      data: {'tableHTML': $("#htmlText").val(), "wrapper": wrapper},
+	      data: {'tableHTML': $("#htmlText").val(), 
+	      		"wrapper": wrapper, 
+	      		"id": id, 
+	      		"hed": hed, 
+	      		"chatter": chatter,
+	      		"input": input,
+	      		"hasRowHeaders": hasRowHeaders,
+	      		"sortable": sortable,
+	      		"hasFooter": hasFooter,
+	      		"needIndent": needIndent
+	      	},
 	      method: 'POST',
 	      success: function(data) {
 	      	if (wrapper == true) {
@@ -36,16 +67,17 @@ function doConvert(wrapper) {
 	        
 	      }
 	    });
+	}
 
-	    
-
+	function runWriteFile(){
+		writeFile(wrapper, session_id, captionText, chatterText, input, hasRowHeaders, sortable, hasFooter, needIndent)
 	}
 
 
 	var input = $('#csvText').val();
 	var hasRowHeaders = $('#optFirstRowHeaders').prop('checked');
-	var sortable = $('#optSortable').prop('checked');
 	var hasColHeaders = $('#optFirstColHeaders').prop('checked');
+	var sortable = $('#optSortable').prop('checked');
 	var hasFooter = $('#optLastRowFooter').prop('checked');
 	var hasCaption = $('#optCaption').prop('checked');
 	var hasChatter = $('#optChatter').prop('checked');
@@ -222,8 +254,8 @@ function doConvert(wrapper) {
 
 		output = output.replace(newRe, "$1&nbsp;&nbsp;&nbsp;");
 		$('#htmlText').val(output);
-
-		writeFile(wrapper);
+		
+		runWriteFile()
 
 
 	})
@@ -245,7 +277,7 @@ function doConvert(wrapper) {
 		output = output.replace(newRe, "$1");
 		$('#htmlText').val(output);
 
-		writeFile(wrapper);
+		runWriteFile()
 
 
 	})
@@ -264,9 +296,8 @@ function doConvert(wrapper) {
 	new Tablesort(document.getElementById('preview-table'));
 	$('.output').removeClass('hidden'); // show it!
 
+		runWriteFile()
 
-	writeFile(wrapper);
-	
 }
 
 // let's work on some interactive features
