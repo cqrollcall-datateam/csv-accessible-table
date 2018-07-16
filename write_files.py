@@ -2,9 +2,19 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 id_session = 0
 
+import os 
+from flask import send_from_directory     
+import copy
+
 @app.route('/')
 def index():
 	return render_template('index.html')
+
+
+@app.route('/favicon.ico/') 
+def favicon(): 
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 @app.route("/tables-index/")
 def existing():
@@ -25,8 +35,9 @@ def existing():
 
 	return render_template("tables-index.html", tables=tables)
 
-@app.route("/<table_id>/")
+@app.route("/table-<table_id>/")
 def existing_table(table_id):
+	print(table_id)
 	import json
 
 	this_table_data = {} 
@@ -39,10 +50,11 @@ def existing_table(table_id):
 	return render_template("index.html", existing = this_table_data)
 
  
-@app.route('/write/', methods=['POST'])
+@app.route('/write/', methods=['POST', "GET"])
 def write():
 	import datetime
 	import json
+	import re
 
 	wrapper_str = str(request.form["wrapper"])
 	session_id = str(request.form["id"])
@@ -71,7 +83,7 @@ def write():
 	existing_json_data = {}
 
 
-	with open("api_output/to_media_server.json", "r") as ofile:
+	with open("api_output/to_media_server.json", "r") as ofile:		
 		existing_json_data = json.loads(ofile.read())
 	ofile.close()
 
@@ -83,8 +95,13 @@ def write():
 	data_to_incl["input"] = request.form["input"]
 	data_to_incl["hasRowHeaders"] = request.form["hasRowHeaders"]
 	data_to_incl["sortable"] = request.form["sortable"]
-	data_to_incl["hasFooter"] = request.form["hasFooter"]
 	data_to_incl["needIndent"] = request.form["needIndent"]
+	data_to_incl["wrapper_str"] = wrapper_str
+	data_to_incl["html_preview"] = copy.copy(request.form["tableHTML"])
+	if data_to_incl["needIndent"] == "true":
+		data_to_incl["html_preview"] = re.sub(r'(<tr.*>)',r"\1<td><span class='arrow-left arrow-span'><img class='arrow-img' src='../static/assets/left-arrow-01.png'></span><span class='arrow-right arrow-span'><img class='arrow-img' src='../static/assets/right-arrow-01.png'></span></td>", data_to_incl["html_preview"])
+
+
 
 
 	existing_json_data["data_tables"][str(session_id)] = data_to_incl

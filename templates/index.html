@@ -10,8 +10,31 @@
 
     {% if existing is defined %}
         {% set staticRoot = "../static" %}
+        {% set existingData = "true" %}
+        {% set hidden = "" %}
+        {% set headline = existing.hed %}
+        {% set chatter = existing.chatter %}
+        {% set input = existing.input %}
+        {% set embed_code = "<div data-pym-src='table-test-"+ existing.id +".html'>&nbsp;</div>" %}
+        {% set standalone_code = "URLPREFIX/table-test-"+ existing.id +".html" %}
+        {% set existingHtml = existing.html %}
+        {% set html_preview = existing.html_preview %}
+        {% if existing.needIndent == "true" %}
+            {% set indentChecked = "checked" %}
+        {% else %}
+            {% set indentChecked = "" %}
+        {% endif %}
     {% else %}
         {% set staticRoot = "static" %}
+        {% set existingData = "false" %}
+        {% set hidden = "hidden" %}
+        {% set headline = "" %}
+        {% set chatter = "" %}
+        {% set input = "" %}
+        {% set embed_code = "" %}
+        {% set standalone_code = "" %}
+        {% set existingHtml = "" %}
+        {% set html_preview = "" %}
     {% endif %}
 
     <meta charset="utf-8">
@@ -38,7 +61,7 @@
         <form role="form">
             <h2>Step 1: Input your CSV file</h2>
             <p>To include bold or italics, place <strong>*asteriks around bold text*</strong> or <em>_underscores around italicized text_</em></p>
-            <div class="file-container hidden">
+            <div class="file-container {{hidden}}">
                 <div id="filedrop" class="drag-and-drop">
                     <p>Drag your CSV file here!</p>
                     <p>Or</p>
@@ -47,21 +70,21 @@
                 </div>
             </div>
             <div class="alerts">
-                <div class="alert alert-success hidden">
+                <div class="alert alert-success {{hidden}}">
                     <strong>Hooray!</strong> Your data was successfully imported! Now, modify the options as needed and click the button below to generate your table code!
                 </div>
                 <div class="alert alert-danger hidden">
                     <strong>Sorry!</strong> That's not a valid file - please ensure to save your data to a CSV file first.
                 </div>
             </div>
-            <div class="form-group csv-file-contents hidden">
+            <div class="form-group csv-file-contents {{hidden}}">
                 <button class="btn btn-primary preview-csv-contents">Preview my CSV contents</button>
                 <div class="csv-text-container hidden">
                     <label for="csvText" class="csv-text">Paste your CSV text here:</label>
-                    <textarea id="csvText" class="form-control" rows="8"></textarea>
+                    <textarea id="csvText" class="form-control" rows="8">{{input}}</textarea>
                 </div>
             </div>
-            <div class="step2 hidden">
+            <div class="step2 {{hidden}}">
                 <h2>Step 2: Specify your options</h2>
                 <div class="checkbox">
                     <label for="optFirstRowHeaders">
@@ -74,13 +97,8 @@
                     </label>
                 </div>
                 <div class="checkbox">
-                    <label for="optLastRowFooter">
-                        <input type="checkbox" id="optLastRowFooter" value=""> Is the last row a footer?
-                    </label>
-                </div>
-                <div class="checkbox">
                     <label for="optIndent">
-                        <input type="checkbox" id="optIndent" value=""> Do you need to indent your table?
+                        <input type="checkbox" id="optIndent" value="" {{indentChecked}}> Do you need to indent your table?
                     </label>
                 </div>
                 <div class="checkbox">
@@ -95,36 +113,39 @@
                 </div>
                 <div class="form-group caption">
                     <label for="textCaption">Headline</label>
-                    <input type="text" id="textCaption" class="form-control">
+                    <input type="text" id="textCaption" class="form-control" value="{{headline}}">
                 </div>
                 <div class="form-group chatter">
                     <label for="textChatter">Chatter</label>
-                    <input type="text" id="textChatter" class="form-control">
+                    <input type="text" id="textChatter" class="form-control" value="{{chatter}}">
                 </div>
-                <button type="button" class="btn btn-primary" onclick="doConvert(false)">Create table for embed</button>
-                <button type="button" class="btn btn-primary" onclick="doConvert(true)">Create table for standalone CQ page</button>
+                <button type="button" class="btn btn-primary" onclick="doConvert(true, false)">Create table</button>
             </div>
             <!-- Step 2 -->
         </form>
-        <div class="output hidden">
-            <h2>Step 3: Get the code</h2>
+        <div class="output {{hidden}}">
+            <div class="table-output">
+                <h2>Step 3: Preview table and indent (optional)</h2>
+                <div id="table-preview">{{html_preview|safe}}</div>
+            </div>
+            <h2>Step 4: Publish</h2>
+            <button type="button" class="btn btn-primary pub-table-btn">Publish table</button>
+            <div class='code-preview-block {{hidden}}'>
+            <h2>Step 5: Get the code</h2>
 
             <div class="embed">
                 <label for="htmlEmbed">Story embed code</label>
-                <textarea id="embed-code"></textarea>
+                <textarea id="embed-code" style="display:block">{{embed_code}}</textarea>
             </div>
             <div class="standalone">
                 <label for="standalone-link">Standalone URL</label>
-                <textarea id="standalone-url"></textarea>
+                <textarea id="standalone-url" style="display:block">{{standalone_code}}</textarea>
             </div>
             <div class="form-group html-output">
                 <label for="htmlText">HTML Table Output (for advanced users)</label>
-                <textarea id="htmlText" class="form-control" rows="8" onclick="this.focus();this.select()" readonly></textarea>
+                <textarea id="htmlText" class="form-control" rows="8" onclick="this.focus();this.select()" readonly>{{existingHtml}}</textarea>
             </div>
-            <div class="table-output">
-                <h2>Step 4: Preview table and indent (optional)</h2>
-                <div id="table-preview"></div>
-            </div>
+        </div>
         </div>
     </div>
     <!-- /container -->
@@ -152,6 +173,10 @@
         {% endfor %}
     </div>
 
+    <script>
+        var existingTrue = {{existingData}}
+    </script>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script>
     window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')
@@ -164,6 +189,17 @@
 
     <script src="{{staticRoot}}/assets/js/main.js"></script>
     <script src="{{staticRoot}}/assets/js/plugins.js"></script>
+
+    <script>
+        {% if existing is defined %}
+            {% if existing.wrapper_str == "true" %}
+                doConvert(true, true)
+            {% else %}
+                doConvert(false, true)
+            {% endif %}
+        {% endif %}
+
+    </script>
 
 </body>
 

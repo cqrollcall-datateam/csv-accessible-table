@@ -31,7 +31,11 @@
     <div class="container">
         <h2>Existing tables</h2>
         {% for tbl in tables %}
-            <h3><a href='../{{ tbl.id }}'>{{ tbl.hed }}</a></h3>
+            {% if tbl.hed != "" %}
+                <h3><a href='../table-{{ tbl.id }}'>{{ tbl.hed }}</a></h3>
+            {% else %}
+                <h3><a href='../table-{{ tbl.id }}'>Table ID: {{ tbl.id }}</a></h3>
+            {% endif %}
             <h5>{{ tbl.chatter }}</h5>
         {% endfor %}
     </div>
