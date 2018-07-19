@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, jsonify
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static/')
 id_session = 0
 
 import os 
-from flask import send_from_directory     
+from flask import Flask, request, send_from_directory
 import copy
+
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 @app.route('/')
 def index():
@@ -14,6 +16,36 @@ def index():
 @app.route('/favicon.ico/') 
 def favicon(): 
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+# set the project root directory as the static folder, you can set others.
+@app.route('/static/<path:path>')
+def send_js(path):
+    return send_from_directory('static', path)
+
+if __name__ == "__main__":
+    app.run()
+
+
+@app.route('/tables/<type>/<table_id>/')
+def show_table(type, table_id): 
+	import json
+
+	valid_pg_types = ["embed", "cq"]
+
+	if type not in valid_pg_types:
+		return "Please enter a page type from: " + str(valid_pg_types)
+
+	api_output = {}
+	with open("api_output/to_media_server.json", "r") as ofile:
+		api_output = json.loads(ofile.read())
+	ofile.close()
+
+	if type == "embed":
+		return api_output["embed_template"].replace("{{TABLE CONTENT}}", api_output["data_tables"][table_id]["html"]).replace("../", "/")
+	elif type == "cq":
+		return api_output["cq_page_template"].replace("{{TABLE CONTENT}}", api_output["data_tables"][table_id]["html"]).replace("../", "/")
+
+
 
 
 @app.route("/tables-index/")

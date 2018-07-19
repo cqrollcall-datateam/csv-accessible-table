@@ -98,7 +98,7 @@ function doConvert(wrapper, existingStart) {
             head += "  <thead>\n    <tr>\n";
 
             $.each(firstRow, function(i, val) {
-                head += "      <th scope=\"col\">" + val + "</th>\n";
+                head += "      <th scope=\"col\">" + readFormatting(val) + "</th>\n";
             });
 
             head += "    </tr>\n  </thead>\n";
