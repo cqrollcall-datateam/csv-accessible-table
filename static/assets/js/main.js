@@ -134,7 +134,7 @@ function doConvert(wrapper, existingStart) {
                     var dataType = "str"
 
 
-                    if (isNaN(parseInt(val[0])) == false || (Date.parse(val))) {
+                    if (isNaN(parseInt(val[0])) == false || (Date.parse(val)) || isNaN(parseInt(val.replace("$", ""))) == false ) {
                         dataType = "num"
                     }
 
